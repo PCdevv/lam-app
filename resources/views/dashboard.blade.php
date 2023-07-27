@@ -24,6 +24,7 @@
             <div class="text-gray-900 dark:text-gray-100 grid grid-cols-4 place-items-center gap-8 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 @foreach ($pengaduans as $pengaduan)
                 <div class="w-11/12 h-auto rounded-xl bg-white dark:bg-gray-800 p-3">
+                    <img src="{{ asset($pengaduan->foto) }}" alt="FotoPengaduan" >
                     <div class="">
                         Laporan :
                         {{ $pengaduan->isi_laporan }}

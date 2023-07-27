@@ -32,7 +32,7 @@ class PengaduanController extends Controller
 
         // !TODO
         $photo = $request->file('foto');
-        $path = $photo->storeAs('public', 'pengaduan' . uniqid() . '.' . $photo->extension());
+        $path = $photo->storeAs('public/images', 'pengaduan_' . uniqid() . '.' . $photo->extension());
         $link = Storage::url($path);
 
         Pengaduan::create([
