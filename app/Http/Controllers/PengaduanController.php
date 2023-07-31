@@ -10,17 +10,22 @@ use Illuminate\Support\Facades\Storage;
 
 class PengaduanController extends Controller
 {
-    public function index()
-    {
-        return view('tulis-laporan');
-    }
-
-    public function show(Request $request)
+    public function index(Request $request)
     {
         $pengaduans = Pengaduan::where('nik', $request->user()->nik)->get();
-        return view('laporan-saya', [
+        return view('pengaduan.index', [
             'pengaduans' => $pengaduans,
         ]);
+    }
+
+    // public function show(Request $request)
+    // {
+
+    // }
+
+    public function create()
+    {
+        return view('pengaduan.create');
     }
 
     public function store(Request $request)
@@ -45,12 +50,22 @@ class PengaduanController extends Controller
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
-    // public function update(Request $request, Pengaduan $pengaduan)
-    // {
-    // }
-
-    public function destroy(Pengaduan $pengaduan)
+    public function edit(string $id_pengaduan)
     {
+        // $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
+        $pengaduan = Pengaduan::findOrFail($id_pengaduan);
+        return view('pengaduan.edit', ['pengaduan' => $pengaduan]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+    }
+
+    public function destroy(string $id_pengaduan)
+    {
+        $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan);
         $pengaduan->delete();
+
+        return redirect('/laporan-saya');
     }
 }

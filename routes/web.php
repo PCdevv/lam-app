@@ -25,9 +25,12 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'masyarakat'])->group(function () {
-    Route::get('/tulis-laporan', [PengaduanController::class, 'index'])->name('tulis-laporan');
+    Route::get('/laporan-saya', [PengaduanController::class, 'index'])->name('laporan-saya');
+    Route::get('/tulis-laporan', [PengaduanController::class, 'create'])->name('tulis-laporan');
     Route::post('/tulis-laporan', [PengaduanController::class, 'store'])->name('tulis-laporan');
-    Route::get('/laporan-saya', [PengaduanController::class, 'show'])->name('laporan-saya');
+    Route::get('/edit-laporan/{id_pengaduan}', [PengaduanController::class, 'edit'])->name('edit-laporan');
+    Route::patch('/edit-laporan/{id_pengaduan}', [PengaduanController::class, 'update'])->name('edit-laporan');
+    Route::delete('/hapus-laporan/{id_pengaduan}', [PengaduanController::class, 'destroy'])->name('hapus-laporan');
 });
 
 Route::middleware(['auth', 'verified', 'petugas'])->group(function () {
@@ -42,18 +45,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::get('/edit-pengguna/{id}', [UserController::class, 'edit'])->name('edit-pengguna');
     Route::patch('/edit-pengguna/{id}', [UserController::class, 'update'])->name('edit-pengguna');
     Route::delete('/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
-
-    // Route::get('/tulis-laporan', [PengaduanController::class, 'index'])->name('tulis-laporan');
-    // Route::post('/tulis-laporan', [PengaduanController::class, 'store'])->name('tulis-laporan');
-    // Route::get('laporan-saya', [PengaduanController::class, 'show'])->name('laporan-saya');
 });
-
-// Route::group('/dashboards', function () {
-// });
-
-// Route::get('/dashboard-admin', function () {
-//     return view('admin-dashboard');
-// })->middleware('admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

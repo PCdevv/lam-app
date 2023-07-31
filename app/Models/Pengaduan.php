@@ -15,4 +15,5 @@ class Pengaduan extends Model
         'nik',
     ];
     public $timestamps = false;
+    protected $primaryKey = 'id_pengaduan';
 }

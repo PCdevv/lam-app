@@ -18,9 +18,16 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 mb-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Semua Laporan") }}
+                    {{ __("Semua Pengaduan") }}
                 </div>
             </div>
+            @if (count($pengaduans) === 0)
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg px-6 mb-6">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    Belum ada pengaduan. 
+                </div>
+            </div>
+            @else
             <div class="text-gray-900 dark:text-gray-100 grid grid-cols-4 items-stretch place-items-center gap-8 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 @foreach ($pengaduans as $pengaduan)
                 <div class="w-11/12 h-auto rounded-xl bg-white dark:bg-gray-800 p-3 self-start">
@@ -48,6 +55,7 @@
                 </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

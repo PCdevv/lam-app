@@ -27,12 +27,21 @@
                         {{ __('Laporan Saya') }}
                     </x-nav-link>
                 </div>
+                @if (request()->routeIs('edit-laporan'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('edit-laporan', ['id_pengaduan' => request()->id_pengaduan])" :active="request()->routeIs('edit-laporan')">
+                                {{ __('Edit Laporan') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endif
+                @if (Auth::user()->level == 'admin' || Auth::user()->level == 'petugas')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('tanggapan-saya')" :active="request()->routeIs('tanggapan-saya')">
-                        {{ __('Tanggapan Saya') }}
+                        {{ __('Tanggapan') }}
                     </x-nav-link>
                 </div>
+                @endif
                 @if (Auth::user()->level == 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('kelola-pengguna')" :active="request()->routeIs('kelola-pengguna')">
