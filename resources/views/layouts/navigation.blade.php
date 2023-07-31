@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                {{-- @if (Auth::user()->level == 'masyarakat') --}}
+                @if (Auth::user()->level == 'masyarakat')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('tulis-laporan')" :active="request()->routeIs('tulis-laporan')">
                         {{ __('Tulis Laporan') }}
@@ -27,19 +27,26 @@
                         {{ __('Laporan Saya') }}
                     </x-nav-link>
                 </div>
-                {{-- @endif --}}
+                @endif
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('tanggapan-saya')" :active="request()->routeIs('tanggapan-saya')">
                         {{ __('Tanggapan Saya') }}
                     </x-nav-link>
                 </div>
-                {{-- @if (Auth::user()->level == 'admin') --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('kelola-pengguna')" :active="request()->routeIs('kelola-pengguna')">
-                        {{ __('Kelola Pengguna') }}
-                    </x-nav-link>
-                </div>
-                {{-- @endif --}}
+                @if (Auth::user()->level == 'admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('kelola-pengguna')" :active="request()->routeIs('kelola-pengguna')">
+                            {{ __('Kelola Pengguna') }}
+                        </x-nav-link>
+                    </div>
+                    @if (request()->routeIs('edit-pengguna'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('edit-pengguna', ['id' => request()->id])" :active="request()->routeIs('edit-pengguna')">
+                                {{ __('Edit Pengguna') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
+                @endif
             </div>
 
             <!-- Settings Dropdown -->

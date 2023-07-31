@@ -18,6 +18,7 @@
                         <tr>
                             <th class="border-2 px-2">No. </th>
                             <th class="border-2 px-2">Tanggal</th>
+                            <th class="border-2 px-2">Foto</th>
                             <th class="border-2 px-2">Isi Laporan</th>
                             <th class="border-2 px-2">Status</th>
                             <th class="border-2 px-2">Tanggapan</th>    
@@ -27,6 +28,9 @@
                         @foreach ($pengaduans as $pengaduan)
                         <tr>
                             <td class="border-2 px-2">{{ $pengaduan->id_pengaduan }}</td>
+                            <td class="border-2 px-2">
+                                <img src="{{ asset($pengaduan->foto) }}" alt="foto_pengaduan" class="w-48 h-auto">
+                            </td>
                             <td class="border-2 px-2">{{ $pengaduan->tgl_pengaduan }}</td>
                             <td class="border-2 px-2">{{ $pengaduan->isi_laporan }}</td>
                             <td class="border-2 px-2">{{ $pengaduan->status }}</td>

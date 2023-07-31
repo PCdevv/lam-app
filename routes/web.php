@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TanggapanController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,17 +27,21 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::middleware(['auth', 'verified', 'masyarakat'])->group(function () {
     Route::get('/tulis-laporan', [PengaduanController::class, 'index'])->name('tulis-laporan');
     Route::post('/tulis-laporan', [PengaduanController::class, 'store'])->name('tulis-laporan');
-    Route::get('laporan-saya', [PengaduanController::class, 'show'])->name('laporan-saya');
+    Route::get('/laporan-saya', [PengaduanController::class, 'show'])->name('laporan-saya');
 });
 
 Route::middleware(['auth', 'verified', 'petugas'])->group(function () {
-    Route::get('tanggapan-saya', [TanggapanController::class, 'show'])->name('tanggapan-saya');
+    Route::get('/tanggapan-saya', [TanggapanController::class, 'show'])->name('tanggapan-saya');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-    Route::get('tanggapan-saya', [TanggapanController::class, 'show'])->name('tanggapan-saya');
-    Route::get('kelola-pengguna', [AdminController::class, 'index'])->name('kelola-pengguna');
-    Route::post('daftarkan-pengguna', [AdminController::class, 'store'])->name('daftarkan-pengguna');
+    Route::get('/tanggapan-saya', [TanggapanController::class, 'show'])->name('tanggapan-saya');
+
+    Route::get('/kelola-pengguna', [UserController::class, 'index'])->name('kelola-pengguna');
+    Route::post('/daftarkan-pengguna', [UserController::class, 'store'])->name('daftarkan-pengguna');
+    Route::get('/edit-pengguna/{id}', [UserController::class, 'edit'])->name('edit-pengguna');
+    Route::patch('/edit-pengguna/{id}', [UserController::class, 'update'])->name('edit-pengguna');
+    Route::delete('/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
 
     // Route::get('/tulis-laporan', [PengaduanController::class, 'index'])->name('tulis-laporan');
     // Route::post('/tulis-laporan', [PengaduanController::class, 'store'])->name('tulis-laporan');

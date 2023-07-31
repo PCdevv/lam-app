@@ -12,6 +12,7 @@ class Pengaduan extends Model
         'foto',
         'isi_laporan',
         'status',
+        'nik',
     ];
     public $timestamps = false;
 }

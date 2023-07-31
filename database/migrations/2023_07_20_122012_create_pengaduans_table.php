@@ -22,7 +22,7 @@ return new class extends Migration
         });
 
         Schema::table('pengaduans', function (Blueprint $table) {
-            $table->foreign('nik')->references('nik')->on('users');
+            $table->foreign('nik')->references('nik')->on('users')->onDelete('cascade');
         });
     }
 

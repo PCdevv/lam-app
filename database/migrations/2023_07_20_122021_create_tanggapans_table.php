@@ -20,8 +20,8 @@ return new class extends Migration
         });
 
         Schema::table('tanggapans', function (Blueprint $table) {
-            $table->foreign('id_pengaduan')->references('id_pengaduan')->on('pengaduans');
-            $table->foreign('id_petugas')->references('id')->on('users');
+            $table->foreign('id_pengaduan')->references('id_pengaduan')->on('pengaduans')->onDelete('cascade');
+            $table->foreign('id_petugas')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

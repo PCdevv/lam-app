@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('kelola-pengguna', [
+        return view('users.index', [
             'users' => $users,
         ]);
     }
@@ -72,7 +72,12 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $users = User::all();
+        $user = User::findOrFail($id);
+        return view('users.edit', [
+            'users' => $users,
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -80,7 +85,19 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'nama_lengkap' => 'required',
+            'telp' => 'required',
+            'level' => 'required',
+            'email' => ['required', 'string', 'email', 'max:255']
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+
+        return redirect()->intended('/kelola-pengguna');
     }
 
     /**
@@ -88,6 +105,9 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect('/kelola-pengguna');
     }
 }

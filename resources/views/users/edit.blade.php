@@ -9,79 +9,56 @@
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("Daftarkan Pengguna") }}
+                    {{ __("Edit Pengguna") }}
                 </div>
-        <form method="POST" action="{{ route('daftarkan-pengguna') }}">
+        <form method="POST" action="{{ route('edit-pengguna', ['id' => request()->id]) }}">
             @csrf
+            @method('patch')
     
             <!-- Nama Lengkap -->
             <div>
                 <x-input-label for="nama_lengkap" :value="__('Nama Lengkap')" />
-                <x-text-input id="nama_lengkap" class="block mt-1 w-full" type="text" name="nama_lengkap" :value="old('nama_lengkap')" required autofocus autocomplete="nama_lengkap" />
+                <x-text-input id="nama_lengkap" class="block mt-1 w-full" type="text" name="nama_lengkap" :value="old('nama_lengkap', $user->nama_lengkap)" required autofocus autocomplete="nama_lengkap" />
                 <x-input-error :messages="$errors->get('nama_lengkap')" class="mt-2" />
             </div>
             <!-- Name -->
             <div>
                 <x-input-label for="name" :value="__('Name')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name', $user->name)" required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <!-- NIK -->
             <div>
                 <x-input-label for="nik" :value="__('NIK')" />
-                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik')" autofocus autocomplete="nik" />
+                <x-text-input id="nik" class="block mt-1 w-full" type="text" name="nik" :value="old('nik', $user->nik)" autofocus autocomplete="nik" />
                 <x-input-error :messages="$errors->get('nik')" class="mt-2" />
             </div>
             <!-- Telp -->
             <div>
                 <x-input-label for="telp" :value="__('Nomor Telepon')" />
-                <x-text-input id="telp" class="block mt-1 w-full" type="text" name="telp" :value="old('telp')" required autofocus autocomplete="telp" />
+                <x-text-input id="telp" class="block mt-1 w-full" type="text" name="telp" :value="old('telp', $user->telp)" required autofocus autocomplete="telp" />
                 <x-input-error :messages="$errors->get('telp')" class="mt-2" />
             </div>
     
             <!-- Email Address -->
             <div class="mt-4">
                 <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $user->email)" required autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
-    
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" />
-    
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-    
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-    
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-    
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-    
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-            </div>
-
             <!-- Select Role -->
             <div class="mt-4">
                 <x-input-label for="level" :value="__('Register as:')" />
                 <select name="level" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-700 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-900 dark:border-gray-700 dark:text-white">
-                    <option value="masyarakat">Masyarakat</option>
-                    <option value="petugas">Petugas</option>
-                    <option value="admin">Admin</option>
+                    <option value="masyarakat" {{ $user->level === 'masyarakat' ? 'selected' : '' }}>Masyarakat</option>
+                    <option value="petugas" {{ $user->level === 'petugas' ? 'selected' : '' }}>Petugas</option>
+                    <option value="admin" {{ $user->level === 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
             </div>
     
             <div class="flex items-center justify-end mt-4">
                 <x-primary-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('Update') }}
                 </x-primary-button>
             </div>
         </form>
@@ -138,17 +115,35 @@
                                 <td class="border-2 px-2">{{ $user->telp }}</td>
                                 <td class="border-2 px-2">{{ $user->level }}</td>
                                 <td class="border-2 px-2  no-print">
-                                    <button class="rounded-md bg-yellow-400 my-1 p-2 hover:bg-yellow-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                        </svg>
-                                    </button>
-                                    <button class="rounded-md bg-red-400 my-1 p-2 hover:bg-red-800">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                        </svg>
-                                    </button>
+                                    <form action="{{ route('edit-pengguna', ['id' => $user->id]) }}" method="get">
+                                        <button class="rounded-md bg-yellow-400 my-1 p-2 hover:bg-yellow-800">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    <form  id="deleteForm" action="{{ route('hapus-pengguna', ['id' => $user->id]) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="button" class="rounded-md bg-red-400 my-1 p-2 hover:bg-red-800" onclick="showConfirmation()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                    @push('scripts')
+                                        <script>
+                                            function showConfirmation() {
+                                                const shouldDelete = confirm('Are you sure you want to delete this user?');
+                                                if (shouldDelete) {
+                                                    document.getElementById('deleteForm').submit();
+                                                } else {
+                                                    
+                                                }
+                                            }
+                                        </script>
+                                    @endpush
                                 </td>
                             </tr>
                         @endforeach

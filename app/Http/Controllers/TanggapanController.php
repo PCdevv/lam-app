@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 
 class TanggapanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('tanggapan-saya');
+        $tanggapans = Tanggapan::where('id_petugas', $request->user()->id_petugas)->get();
+        return view('tanggapan-saya', [
+            'tanggapans' => $tanggapans,
+        ]);
     }
 
     public function show(Request $request)

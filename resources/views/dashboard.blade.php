@@ -21,9 +21,9 @@
                     {{ __("Semua Laporan") }}
                 </div>
             </div>
-            <div class="text-gray-900 dark:text-gray-100 grid grid-cols-4 place-items-center gap-8 overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="text-gray-900 dark:text-gray-100 grid grid-cols-4 items-stretch place-items-center gap-8 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 @foreach ($pengaduans as $pengaduan)
-                <div class="w-11/12 h-auto rounded-xl bg-white dark:bg-gray-800 p-3">
+                <div class="w-11/12 h-auto rounded-xl bg-white dark:bg-gray-800 p-3 self-start">
                     <img src="{{ asset($pengaduan->foto) }}" alt="FotoPengaduan" >
                     <div class="">
                         Laporan :

@@ -20,7 +20,7 @@ class DashboardController extends Controller
                 'pengaduans' => $pengaduans
             ]);
         }
-        if ($request->user()->level == 'prtugas') {
+        if ($request->user()->level == 'petugas') {
             return view('petugas-dashboard', [
                 'pengaduans' => $pengaduans
             ]);
