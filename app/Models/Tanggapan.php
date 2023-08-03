@@ -9,4 +9,12 @@ class Tanggapan extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $guarded = [];
+    protected $primaryKey = 'id_tanggapan';
+
+
+    public function data_pengaduan()
+    {
+        return $this->belongsTo(Pengaduan::class, 'id_pengaduan');
+    }
 }

@@ -64,7 +64,7 @@
                                 @push('scripts')
                                     <script>
                                         function showConfirmation() {
-                                            const shouldDelete = confirm('Are you sure you want to delete this user?');
+                                            const shouldDelete = confirm('Are you sure you want to delete this Pengaduan?');
                                             if (shouldDelete) {
                                                 document.getElementById('deleteForm').submit();
                                             } else {

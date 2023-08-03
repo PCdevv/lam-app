@@ -36,11 +36,25 @@
                     @endif
                 @endif
                 @if (Auth::user()->level == 'admin' || Auth::user()->level == 'petugas')
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('tanggapan-saya')" :active="request()->routeIs('tanggapan-saya')">
-                        {{ __('Tanggapan') }}
-                    </x-nav-link>
-                </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('tanggapan-saya')" :active="request()->routeIs('tanggapan-saya')">
+                            {{ __('Tanggapan Saya') }}
+                        </x-nav-link>
+                    </div>
+                    @if (request()->routeIs('berikan-tanggapan-view'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :active="request()->routeIs('berikan-tanggapan-view')">
+                                {{ __('Berikan Tanggapan') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
+                    @if (request()->routeIs('edit-tanggapan'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :active="request()->routeIs('edit-tanggapan')">
+                                {{ __('Edit Tanggapan') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endif
                 @if (Auth::user()->level == 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -50,7 +64,7 @@
                     </div>
                     @if (request()->routeIs('edit-pengguna'))
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('edit-pengguna', ['id' => request()->id])" :active="request()->routeIs('edit-pengguna')">
+                            <x-nav-link :active="request()->routeIs('edit-pengguna')">
                                 {{ __('Edit Pengguna') }}
                             </x-nav-link>
                         </div>

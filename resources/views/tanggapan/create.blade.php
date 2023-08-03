@@ -9,23 +9,27 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="text-center py-3 text-gray-900 dark:text-gray-100">
-                    {{ __("Edit Tanggapan") }}
+                    {{ __("Berikan Tanggapan") }}
                 </div>
-                <form method="POST" action="{{ route('edit-tanggapan-patch', ['id_tanggapan' => $tanggapan->id_tanggapan]) }}">
+                <form method="POST" action="{{ route('berikan-tanggapan', ['id_pengaduan' => $pengaduan->id_pengaduan]) }}">
                     @csrf
-                    @method('patch')
             
-                    <!-- Laporan -->
+                    {{-- <!-- Id Laporan -->
                     <div class="mt-4 ">
-                        <x-input-label for="isi_laporan" :value="__('Laporan')" />
+                        <label for="id_pengaduan" class="text-gray-900 dark:text-gray-100" >Id Laporan</label>
+                        <input class="block mt-1 w-full bg-white dark:bg-gray-700 rounded-md dark:text-white" name="id_pengaduan" id="id_pengaduan" disabled value="{{ $pengaduan->id_pengaduan }}" class="block mt-1 w-full bg-white dark:bg-gray-900 rounded-md dark:text-white">
+                    </div> --}}
+
+                    <!-- Isi Laporan -->
+                    <div class="mt-4 ">
+                        <x-input-label for="isi_laporan" :value="__('Isi Laporan')" />
             
                         <textarea rows="3" id="about" class="block mt-1 w-full bg-white dark:bg-gray-700 rounded-md dark:text-white"
                                         type="text"
                                         name="isi_laporan"
                                         required autocomplete="isi_laporan"
                                         disabled
-                                        >
-                                        {{ $tanggapan->data_pengaduan->isi_laporan }}
+                                        >{{ $pengaduan->isi_laporan }}
                                     </textarea>
                     </div>
 
@@ -42,9 +46,7 @@
                     <!-- Tanggapan -->
                     <div class="mt-4">
                         <x-input-label for="tanggapan" :value="__('Tanggapan')" />
-                        <textarea name="tanggapan" class="block mt-1 w-full bg-white dark:bg-gray-900 rounded-md dark:text-white" cols="30" rows="10" required>
-                            {{ $tanggapan->tanggapan }}
-                        </textarea>                
+                        <textarea name="tanggapan" class="block mt-1 w-full bg-white dark:bg-gray-900 rounded-md dark:text-white" cols="30" rows="10" required ></textarea>                
                         <x-input-error :messages="$errors->get('tanggapan')" class="mt-2" />
                     </div>
             

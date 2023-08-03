@@ -10,66 +10,82 @@ class TanggapanController extends Controller
 {
     public function index(Request $request)
     {
-        $tanggapans = Tanggapan::where('id_petugas', $request->user()->id_petugas)->get();
+        $tanggapans = Tanggapan::where('id_petugas', $request->user()->id)->with('data_pengaduan')->get();
+        $pengaduans = Pengaduan::all();
         return view('tanggapan.index', [
             'tanggapans' => $tanggapans,
+            'pengaduans' => $pengaduans,
         ]);
     }
 
-    public function show(Request $request)
+    public function create(string $id_pengaduan)
     {
-        $tanggapans = Tanggapan::where('id_petugas', $request->user()->id_petugas)->get();
-        return view('tanggapan.index', [
-            'tanggapans' => $tanggapans,
+        $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
+        return view('tanggapan.create', [
+            'pengaduan' => $pengaduan,
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, string $id_pengaduan)
     {
+        $pengaduan = Pengaduan::where('id_pengaduan', $id_pengaduan)->first();
 
-        $pengaduan = Pengaduan::where('id_pengaduan', $request->id_pengaduan)->first();
+        $request->validate([
+            'status' => 'required',
+            'tanggapan' => 'required',
+        ]);
 
-        $tanggapanData = Tanggapan::create([
-            'id_pengaduan' => $pengaduan->id_pengaduan,
+        Tanggapan::create([
+            'id_pengaduan' => $request->id_pengaduan,
             'tanggapan' => $request->tanggapan,
             'id_petugas' => $request->user()->id,
         ]);
 
         $pengaduan->status = $request->status;
-        $pengaduan->id_tanggapan = $tanggapanData->id_tanggapan;
         $pengaduan->save();
+
+        return redirect()->intended('/tanggapan-saya');
     }
 
-    public function edit(string $id)
+    public function edit(Request $request, string $id_tanggapan)
     {
-        $users = Tanggapan::all();
-        $user = Tanggapan::findOrFail($id);
-        return view('tanggapan.index', [
-            'users' => $users,
-            'user' => $user,
+        // dd($request->id_pengaduan);
+        // $tanggapan = Tanggapan::findOrFail($id_tanggapan);
+        $tanggapan = Tanggapan::where('id_tanggapan', $id_tanggapan)->with('data_pengaduan')->first();
+        return view('tanggapan.edit', [
+            'tanggapan' => $tanggapan
         ]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id_tanggapan)
     {
-
+        // dd([$id_tanggapan, $request->id_pengaduan]);
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'nama_lengkap' => 'required',
-            'telp' => 'required',
-            'level' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255']
+            'status' => 'required',
+            'tanggapan' => 'required',
         ]);
 
-        $tanggapan = Tanggapan::findOrFail($id);
-        $tanggapan->update($request->all());
+        $tanggapan = Tanggapan::findOrFail($id_tanggapan);
 
-        return redirect()->intended('/kelola-pengguna');
+        if (is_null($tanggapan)) {
+            return redirect()->back()->with('error', 'Tanggapan not found.');
+        }
+        // return $tanggapan;
+        $tanggapan->tanggapan = $request->tanggapan;
+        $tanggapan->save();
+
+        $pengaduan = Pengaduan::where('id_pengaduan', $tanggapan->id_pengaduan)->first();
+        if ($pengaduan) {
+            $pengaduan->status = $request->status;
+            $pengaduan->save();
+        }
+
+        return redirect()->intended('/tanggapan-saya');
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id_tanggapan)
     {
-        $tanggapan = Tanggapan::findOrFail($id);
+        $tanggapan = Tanggapan::findOrFail($id_tanggapan);
         $tanggapan->delete();
 
         return redirect('/tanggapan-saya');

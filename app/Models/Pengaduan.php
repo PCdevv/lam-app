@@ -16,4 +16,9 @@ class Pengaduan extends Model
     ];
     public $timestamps = false;
     protected $primaryKey = 'id_pengaduan';
+
+    public function data_tanggapan()
+    {
+        return $this->hasOne(Tanggapan::class, 'id_pengaduan');
+    }
 }

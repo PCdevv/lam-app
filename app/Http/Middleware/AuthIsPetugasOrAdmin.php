@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthIsPetugas
+class AuthIsPetugasOrAdmin
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class AuthIsPetugas
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->level == 'petugas') {
+        if ($request->user()->level == 'petugas' || $request->user()->level == 'admin') {
             return $next($request);
         }
         abort('401');

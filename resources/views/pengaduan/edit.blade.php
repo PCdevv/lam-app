@@ -17,7 +17,7 @@
                     </div>
                     <div>
                         <x-input-label for="foto" :value="__('Ubah Foto')" />
-                        <input id="foto" class="block mt-1 w-full bg-white dark:bg-gray-900 rounded-md dark:text-white" type="file" accept="image/*" name="foto" :value="old('foto')" required autofocus autocomplete="isi_laporan" />
+                        <input id="foto" class="block mt-1 w-full bg-white dark:bg-gray-900 rounded-md dark:text-white" type="file" accept="image/*" name="foto" :value="old('foto')" autofocus autocomplete="isi_laporan" />
                         <x-input-error :messages="$errors->get('foto')" class="mt-2" />
                     </div>
             

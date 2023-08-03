@@ -36,7 +36,18 @@
                         Laporan :
                         {{ $pengaduan->isi_laporan }}
                     </div>
-                    {{ $pengaduan->tgl_pengaduan }}
+                    <div class="">
+                        Tanggapan :
+                        {{ $pengaduan->data_tanggapan ? $pengaduan->data_tanggapan->tanggapan : '-' }}
+                    </div>
+                    <div class="">
+                        Tanggal Pengaduan :
+                        {{ $pengaduan->data_tanggapan ? $pengaduan->data_tanggapan->tgl_tanggapan  : '-' }}
+                    </div>
+                    <div class="">
+                        Tanggal Tanggapan :
+                        {{ $pengaduan->tgl_pengaduan }}
+                    </div>
                     @if ($pengaduan->status == 'pending')
                             <div class="bg-yellow-400 text-center rounded-full">
                                 {{ $pengaduan->status }}

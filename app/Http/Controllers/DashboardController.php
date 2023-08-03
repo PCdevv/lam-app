@@ -9,20 +9,21 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $pengaduans = Pengaduan::all();
+        // $pengaduans = Pengaduan::all();
+        $pengaduans_with_tanggapan = Pengaduan::with('data_tanggapan')->get();
         if ($request->user()->level == 'masyarakat') {
             return view('dashboard', [
-                'pengaduans' => $pengaduans
+                'pengaduans' => $pengaduans_with_tanggapan
             ]);
         }
         if ($request->user()->level == 'admin') {
             return view('admin-dashboard', [
-                'pengaduans' => $pengaduans
+                'pengaduans' => $pengaduans_with_tanggapan
             ]);
         }
         if ($request->user()->level == 'petugas') {
             return view('petugas-dashboard', [
-                'pengaduans' => $pengaduans
+                'pengaduans' => $pengaduans_with_tanggapan
             ]);
         }
     }

@@ -33,19 +33,39 @@ Route::middleware(['auth', 'verified', 'masyarakat'])->group(function () {
     Route::delete('/hapus-laporan/{id_pengaduan}', [PengaduanController::class, 'destroy'])->name('hapus-laporan');
 });
 
-Route::middleware(['auth', 'verified', 'petugas'])->group(function () {
-    Route::get('/tanggapan-saya', [TanggapanController::class, 'show'])->name('tanggapan-saya');
+
+// Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+//     Route::get('/tanggapan-saya', [TanggapanController::class, 'index'])->name('tanggapan-saya');
+//     Route::get('/berikan-tanggapan/{id_pengaduan}', [TanggapanController::class, 'create'])->name('berikan-tanggapan-view');
+//     Route::post('/berikan-tanggapan/{id_pengaduan}', [TanggapanController::class, 'store'])->name('berikan-tanggapan');
+//     Route::get('/edit-tanggapan/{id_tanggapan}', [TanggapanController::class, 'edit'])->name('edit-tanggapan-view');
+//     Route::patch('/patch-tanggapan/{id_tanggapan}', [TanggapanController::class, 'update'])->name('edit-tanggapan-patch');
+//     Route::delete('/hapus-tanggapan/{id_tanggapan}', [TanggapanController::class, 'destroy'])->name('hapus-tanggapan');
+
+//     Route::get('/kelola-pengguna', [UserController::class, 'index'])->name('kelola-pengguna');
+//     Route::post('/daftarkan-pengguna', [UserController::class, 'store'])->name('daftarkan-pengguna');
+//     Route::get('/edit-pengguna/{id}', [UserController::class, 'edit'])->name('edit-pengguna');
+//     Route::patch('/edit-pengguna/{id}', [UserController::class, 'update'])->name('edit-pengguna');
+//     Route::delete('/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
+// });
+
+Route::middleware(['auth', 'verified', 'petugas_or_admin'])->group(function () {
+    Route::get('/tanggapan-saya', [TanggapanController::class, 'index'])->name('tanggapan-saya');
+    Route::get('/berikan-tanggapan/{id_pengaduan}', [TanggapanController::class, 'create'])->name('berikan-tanggapan-view');
+    Route::post('/berikan-tanggapan/{id_pengaduan}', [TanggapanController::class, 'store'])->name('berikan-tanggapan');
+    Route::get('/edit-tanggapan/{id_tanggapan}', [TanggapanController::class, 'edit'])->name('edit-tanggapan-view');
+    Route::patch('/patch-tanggapan/{id_tanggapan}', [TanggapanController::class, 'update'])->name('edit-tanggapan-patch');
+    Route::delete('/hapus-tanggapan/{id_tanggapan}', [TanggapanController::class, 'destroy'])->name('hapus-tanggapan');
+
+    Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+        Route::get('/kelola-pengguna', [UserController::class, 'index'])->name('kelola-pengguna');
+        Route::post('/daftarkan-pengguna', [UserController::class, 'store'])->name('daftarkan-pengguna');
+        Route::get('/edit-pengguna/{id}', [UserController::class, 'edit'])->name('edit-pengguna');
+        Route::patch('/edit-pengguna/{id}', [UserController::class, 'update'])->name('edit-pengguna');
+        Route::delete('/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
+    });
 });
 
-Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-    Route::get('/tanggapan-saya', [TanggapanController::class, 'show'])->name('tanggapan-saya');
-
-    Route::get('/kelola-pengguna', [UserController::class, 'index'])->name('kelola-pengguna');
-    Route::post('/daftarkan-pengguna', [UserController::class, 'store'])->name('daftarkan-pengguna');
-    Route::get('/edit-pengguna/{id}', [UserController::class, 'edit'])->name('edit-pengguna');
-    Route::patch('/edit-pengguna/{id}', [UserController::class, 'update'])->name('edit-pengguna');
-    Route::delete('/hapus-pengguna/{id}', [UserController::class, 'destroy'])->name('hapus-pengguna');
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

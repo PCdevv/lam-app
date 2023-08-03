@@ -57,8 +57,12 @@ class PengaduanController extends Controller
         return view('pengaduan.edit', ['pengaduan' => $pengaduan]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id_pengaduan)
     {
+        $pengaduan = Pengaduan::findOrFail($id_pengaduan);
+        $pengaduan->update($request->all());
+
+        return redirect()->intended('/laporan-saya');
     }
 
     public function destroy(string $id_pengaduan)
